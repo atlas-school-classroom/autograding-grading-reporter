@@ -57,14 +57,11 @@ exports.NotifyClassroom = async function NotifyClassroom(runnerResults) {
     // Find the check suite run
     const checkSuiteUrl = workflowRunResponse.data.check_suite_url;
     const checkSuiteId = parseInt(checkSuiteUrl.match(/[0-9]+$/)[0], 10);
-    const checkName = workflowRunResponse.data.check_name;
-
-    console.log("Check Name: ", checkName)
 
     const checkRunsResponse = await octokit.rest.checks.listForSuite({
         owner,
         repo,
-        check_name: checkName,
+        check_name: "run-autograding-tests",
         check_suite_id: checkSuiteId,
     });
 
