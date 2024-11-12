@@ -32115,6 +32115,7 @@ const ConsoleResults = function ConsoleResults(runnerResults) {
             }
             let passedTests = 0;
             const totalTests = results.tests.length;
+            console.log(`🔄 Processing: ${key}`);
             results.tests.forEach((test) => {
                 if (test.status === "pass") {
                     passedTests += 1;
