@@ -34,8 +34,14 @@ exports.NotifyClassroom = async function NotifyClassroom(runnerResults) {
     // We'll split this into two separate variables for later use
     const nwo = process.env.GITHUB_REPOSITORY || "/";
     const [owner, repo] = nwo.split("/");
-    if (!owner) return;
-    if (!repo) return;
+    if (!owner) {
+        console.log("No Owner")
+        return;
+    }
+    if (!repo) {
+        console.log("No repo")
+        return;
+    }
 
     // We need the workflow run id
     const runId = parseInt(process.env.GITHUB_RUN_ID || "");
