@@ -32101,16 +32101,16 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ConsoleResults = void 0;
 const colors_1 = __nccwpck_require__(4838);
 const aggregate_results_1 = __nccwpck_require__(6576);
-const { getTestScore, getMaxScoreForTest } = __nccwpck_require__(103);
+const test_helpers_1 = __nccwpck_require__(7470);
 const ConsoleResults = function ConsoleResults(runnerResults) {
     try {
         let grandTotalPassedTests = 0;
         let grandTotalTests = 0;
         runnerResults.testResults.forEach(({ key, results }, index) => {
             // Fun transition to new runner
-            const maxScore = getMaxScoreForTest(results);
+            const maxScore = (0, test_helpers_1.getMaxScoreForTest)(results);
             // const weight = getTestWeight(maxScore, totalMaxScore);
-            const score = getTestScore(results);
+            const score = (0, test_helpers_1.getTestScore)(results, runnerResults.pointsPerTest);
             if (index > 0) {
                 console.log(`${colors_1.COLORS.magenta}🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀${colors_1.COLORS.reset}\n`);
             }
@@ -32400,14 +32400,6 @@ const getTestWeight = (maxScore, allMaxScores) => {
     return Math.round(weight).toFixed(2);
 };
 exports.getTestWeight = getTestWeight;
-
-
-/***/ }),
-
-/***/ 103:
-/***/ ((module) => {
-
-module.exports = eval("require")("./helpers/test-helpers");
 
 
 /***/ }),

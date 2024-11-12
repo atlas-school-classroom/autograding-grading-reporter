@@ -2,7 +2,7 @@ import { TestResult } from "./types";
 
 import { COLORS } from "./colors";
 import { AggregateResults } from "./aggregate-results";
-const { getTestScore, getMaxScoreForTest } = require("./helpers/test-helpers");
+import { getTestScore, getMaxScoreForTest } from "./test-helpers";
 
 type Input = {
   testResults: {
@@ -23,7 +23,7 @@ export const ConsoleResults = function ConsoleResults(runnerResults: Input) {
       // Fun transition to new runner
       const maxScore = getMaxScoreForTest(results);
       // const weight = getTestWeight(maxScore, totalMaxScore);
-      const score = getTestScore(results);
+      const score = getTestScore(results, runnerResults.pointsPerTest);
       if (index > 0) {
         console.log(
           `${COLORS.magenta}🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀${COLORS.reset}\n`
