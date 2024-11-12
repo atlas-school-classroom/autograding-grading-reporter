@@ -20,10 +20,6 @@ type Input = {
   pointsPerTest: number;
 };
 
-function round(number: number, precision: number){
-  return Math.round(number * 10 * precision) / (10 * precision)
-}
-
 export function getTableTotals(
   runnerResults: Input,
   pushToTable: (a: [testName: string, score: number, maxScore: number]) => void
@@ -35,7 +31,7 @@ export function getTableTotals(
       key.trim().replace("ATLAS_TEST_", "").replace("_", " ")
     );
 
-    pushToTable([testName, round(score, 2), round(maxScore, 2)]);
+    pushToTable([testName, Math.round(score), Math.round(maxScore)]);
 
     return {
       score,
@@ -60,7 +56,7 @@ export function AggregateResults(runnerResults: Input) {
     // const totalPercent = totals.reduce(totalPercentageReducer, 0).toFixed(2) + "%";
     const totalTestScores = totals.reduce((acc, curr) => acc + curr.score, 0);
 
-    table.push(["Total: ", `${totalTestScores}`, `${runnerResults.maxPoints}`]);
+    table.push(["Total: ", `${Math.min(Math.round(totalTestScores), runnerResults.maxPoints)}`, `${runnerResults.maxPoints}`]);
 
     console.log(table.toString());
   } catch (error: any) {

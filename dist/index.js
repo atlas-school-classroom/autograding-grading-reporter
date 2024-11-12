@@ -32035,15 +32035,12 @@ exports.getTableTotals = getTableTotals;
 exports.AggregateResults = AggregateResults;
 const cli_table3_1 = __importDefault(__nccwpck_require__(1668));
 const test_helpers_1 = __nccwpck_require__(5920);
-function round(number, precision) {
-    return Math.round(number * 10 * precision) / (10 * precision);
-}
 function getTableTotals(runnerResults, pushToTable) {
     return runnerResults.testResults.map(({ key, results }) => {
         const maxScore = runnerResults.pointsPerTest;
         const score = (0, test_helpers_1.getTestScore)(results, runnerResults.pointsPerTest);
         const testName = capitalize(key.trim().replace("ATLAS_TEST_", "").replace("_", " "));
-        pushToTable([testName, round(score, 2), round(maxScore, 2)]);
+        pushToTable([testName, Math.round(score), Math.round(maxScore)]);
         return {
             score,
             maxScore,
@@ -32062,7 +32059,7 @@ function AggregateResults(runnerResults) {
         const totals = getTableTotals(runnerResults, (row) => table.push(row));
         // const totalPercent = totals.reduce(totalPercentageReducer, 0).toFixed(2) + "%";
         const totalTestScores = totals.reduce((acc, curr) => acc + curr.score, 0);
-        table.push(["Total: ", `${totalTestScores}`, `${runnerResults.maxPoints}`]);
+        table.push(["Total: ", `${Math.min(Math.round(totalTestScores), runnerResults.maxPoints)}`, `${runnerResults.maxPoints}`]);
         console.log(table.toString());
     }
     catch (error) {
