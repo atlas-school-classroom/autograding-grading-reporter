@@ -23,11 +23,8 @@ export function getTableTotals(
   runnerResults: Input,
   pushToTable: (a: [testName: string, score: number, maxScore: number]) => void
 ) {
-  const totalMaxScore = runnerResults.pointsPerTest;
-
   return runnerResults.testResults.map(({ key, results }) => {
     const maxScore = runnerResults.pointsPerTest;
-    // const weight = getTestWeight(maxScore, totalMaxScore);
     const score = getTestScore(results, runnerResults.pointsPerTest);
     const testName = capitalize(
       key.trim().replace("ATLAS_TEST_", "").replace("_", " ")

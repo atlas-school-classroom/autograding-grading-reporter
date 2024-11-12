@@ -32036,10 +32036,8 @@ exports.AggregateResults = AggregateResults;
 const cli_table3_1 = __importDefault(__nccwpck_require__(1668));
 const test_helpers_1 = __nccwpck_require__(5920);
 function getTableTotals(runnerResults, pushToTable) {
-    const totalMaxScore = runnerResults.pointsPerTest;
     return runnerResults.testResults.map(({ key, results }) => {
         const maxScore = runnerResults.pointsPerTest;
-        // const weight = getTestWeight(maxScore, totalMaxScore);
         const score = (0, test_helpers_1.getTestScore)(results, runnerResults.pointsPerTest);
         const testName = capitalize(key.trim().replace("ATLAS_TEST_", "").replace("_", " "));
         pushToTable([testName, score, maxScore]);
