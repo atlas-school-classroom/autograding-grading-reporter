@@ -20,6 +20,10 @@ type Input = {
   pointsPerTest: number;
 };
 
+function round(number: number, precision: number){
+  return Math.floor(number * 10 * precision) / (10 * precision)
+}
+
 export function getTableTotals(
   runnerResults: Input,
   pushToTable: (a: [testName: string, score: number, maxScore: number]) => void
@@ -31,7 +35,7 @@ export function getTableTotals(
       key.trim().replace("ATLAS_TEST_", "").replace("_", " ")
     );
 
-    pushToTable([testName, Math.round(score), Math.round(maxScore)]);
+    pushToTable([testName, round(score, 2), round(maxScore, 2)]);
 
     return {
       score,

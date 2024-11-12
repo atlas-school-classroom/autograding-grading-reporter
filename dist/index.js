@@ -32035,12 +32035,15 @@ exports.getTableTotals = getTableTotals;
 exports.AggregateResults = AggregateResults;
 const cli_table3_1 = __importDefault(__nccwpck_require__(1668));
 const test_helpers_1 = __nccwpck_require__(5920);
+function round(number, precision) {
+    return Math.floor(number * 10 * precision) / (10 * precision);
+}
 function getTableTotals(runnerResults, pushToTable) {
     return runnerResults.testResults.map(({ key, results }) => {
         const maxScore = runnerResults.pointsPerTest;
         const score = (0, test_helpers_1.getTestScore)(results, runnerResults.pointsPerTest);
         const testName = capitalize(key.trim().replace("ATLAS_TEST_", "").replace("_", " "));
-        pushToTable([testName, Math.round(score), Math.round(maxScore)]);
+        pushToTable([testName, round(score, 2), round(maxScore, 2)]);
         return {
             score,
             maxScore,
