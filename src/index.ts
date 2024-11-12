@@ -30,6 +30,12 @@ try {
 
   ConsoleResults(results);
   NotifyClassroom(results);
+
+  if (results.testResults.some((r) => r.results.status === "fail")) {
+    core.setFailed("Some tests failed.");
+  } else if (results.testResults.some((r) => r.results.status === "error")) {
+    core.setFailed("Some tests errored.");
+  }
 } catch (error) {
   //@ts-ignore
   core.setFailed(error.message);

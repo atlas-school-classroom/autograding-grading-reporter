@@ -32234,6 +32234,12 @@ try {
     const results = { testResults, numberOfTests, maxPoints, pointsPerTest };
     (0, console_results_1.ConsoleResults)(results);
     (0, notify_classroom_1.NotifyClassroom)(results);
+    if (results.testResults.some((r) => r.results.status === "fail")) {
+        core_1.default.setFailed("Some tests failed.");
+    }
+    else if (results.testResults.some((r) => r.results.status === "error")) {
+        core_1.default.setFailed("Some tests errored.");
+    }
 }
 catch (error) {
     //@ts-ignore
