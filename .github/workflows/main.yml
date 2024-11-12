@@ -23,6 +23,12 @@ jobs:
         with:
           test-name: test-one
           command: diff "lsdfkjsf" "sljdhfksjdf"
+      - name: "Test Case: Test Three"
+        id: test-three
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: test-three
+          command: diff "lsdfkjsf" "sljdhfksjdf"
       # To use this repository's private action,
       # you must check out the repository
       - name: Checkout
@@ -33,3 +39,4 @@ jobs:
           ATLAS_MAX_POINTS: 50
           ATLAS_TEST_TEST-ONE: "${{steps.test-one.outputs.result}}"
           ATLAS_TEST_TEST-TWO: "${{steps.test-two.outputs.result}}"
+          ATLAS_TEST_TEST-THREE: "${{steps.test-three.outputs.result}}"
