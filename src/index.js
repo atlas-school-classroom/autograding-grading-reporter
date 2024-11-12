@@ -22,7 +22,8 @@ try {
     const testResults = getTestResults();
     const numberOfTests = testResults.length;
     const totalPoints = getTotalPoints();
-    const results = { testResults, numberOfTests, totalPoints }
+    const pointsPerTest = totalPoints / numberOfTests
+    const results = { testResults, numberOfTests, totalPoints, pointsPerTest }
     NotifyClassroom(results);
 } catch (error) {
     core.setFailed(error.message);

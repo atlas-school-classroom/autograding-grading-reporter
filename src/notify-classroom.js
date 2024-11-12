@@ -8,7 +8,7 @@ exports.NotifyClassroom = async function NotifyClassroom(runnerResults) {
     const { passPoints, maxPoints } = runnerResults.testResults.reduce(
         (acc, { results }) => {
             if (results.status === "pass")
-                acc.passPoints += 1;
+                acc.passPoints += runnerResults.pointsPerTest;
 
             return acc;
         },

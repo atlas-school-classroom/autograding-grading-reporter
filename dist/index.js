@@ -29920,7 +29920,7 @@ exports.NotifyClassroom = async function NotifyClassroom(runnerResults) {
     const { passPoints, maxPoints } = runnerResults.testResults.reduce(
         (acc, { results }) => {
             if (results.status === "pass")
-                acc.passPoints += 1;
+                acc.passPoints += runnerResults.pointsPerTest;
 
             return acc;
         },
@@ -31968,7 +31968,8 @@ try {
     const testResults = getTestResults();
     const numberOfTests = testResults.length;
     const totalPoints = getTotalPoints();
-    const results = { testResults, numberOfTests, totalPoints }
+    const pointsPerTest = totalPoints / numberOfTests
+    const results = { testResults, numberOfTests, totalPoints, pointsPerTest }
     NotifyClassroom(results);
 } catch (error) {
     core.setFailed(error.message);
