@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+const { NotifyClassroom } = require("./notify-classroom");
 
 function getTestResults() {
     const runnerResults = Object.keys(process.env)
@@ -13,7 +14,7 @@ function getTestResults() {
 }
 
 function getTotalPoints() {
-    return process.env["ATLAS_TOTAL_POINTS"] ?? 100;
+    return Number(process.env["ATLAS_TOTAL_POINTS"] ?? 100);
 }
 
 
@@ -21,10 +22,8 @@ try {
     const testResults = getTestResults();
     const numberOfTests = testResults.length;
     const totalPoints = getTotalPoints();
-    console.log("Test Cases: ", JSON.stringify(testResults, null, 2))
-    console.log("Number of Tests: ", numberOfTests)
-    console.log("Points per test: ", totalPoints / numberOfTests)
-    console.log("Total Points: ", totalPoints)
+    const results = { testResults, numberOfTests, totalPoints }
+    NotifyClassroom(results);
 } catch (error) {
     core.setFailed(error.message);
 }
