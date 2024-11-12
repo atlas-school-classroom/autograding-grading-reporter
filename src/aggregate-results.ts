@@ -8,6 +8,7 @@ import {
   getMaxScoreForTest,
 } from "./helpers/test-helpers";
 import { TestResult } from "./types";
+import { prependOnceListener } from "process";
 
 type Input = {
   testResults: {
@@ -18,6 +19,10 @@ type Input = {
   maxPoints: number;
   pointsPerTest: number;
 };
+
+function round(number: number, precision: number){
+  return Math.round(number * 10 * precision) / (10 * precision)
+}
 
 export function getTableTotals(
   runnerResults: Input,
@@ -30,7 +35,7 @@ export function getTableTotals(
       key.trim().replace("ATLAS_TEST_", "").replace("_", " ")
     );
 
-    pushToTable([testName, score, maxScore]);
+    pushToTable([testName, round(score, 2), round(maxScore, 2)]);
 
     return {
       score,
