@@ -13,7 +13,7 @@ function getTestResults() {
 }
 
 function getTotalPoints() {
-    return process.env["ATLAS_TOTAL_POINTS"];
+    return process.env["ATLAS_TOTAL_POINTS"] ?? 100;
 }
 
 
