@@ -29953,6 +29953,29 @@ catch (error) {
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -29967,7 +29990,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.NotifyClassroom = void 0;
-const core_1 = __importDefault(__nccwpck_require__(4708));
+const core = __importStar(__nccwpck_require__(4708));
 const github_1 = __importDefault(__nccwpck_require__(3802));
 const NotifyClassroom = function NotifyClassroom(runnerResults) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -29980,7 +30003,7 @@ const NotifyClassroom = function NotifyClassroom(runnerResults) {
         }, { passPoints: 0, maxPoints: runnerResults.totalPoints });
         // Our action will need to API access the repository so we require a token
         // This will need to be set in the calling workflow, otherwise we'll exit
-        const token = process.env.GITHUB_TOKEN || core_1.default.getInput("token");
+        const token = process.env.GITHUB_TOKEN || core.getInput("token");
         if (!token || token === "") {
             console.log("No Token");
             return;
