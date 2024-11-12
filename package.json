@@ -1,5 +1,5 @@
 {
-  "name": "@atlasschool/grade-reporter",
+  "name": "@atlasschool/autograding-grading-reporter",
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
