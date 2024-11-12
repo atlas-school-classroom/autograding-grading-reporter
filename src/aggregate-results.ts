@@ -1,14 +1,8 @@
-import { COLORS } from "./colors";
 import Table from "cli-table3";
 import {
-  getTotalMaxScore,
-  getTestWeight,
   getTestScore,
-  totalPercentageReducer,
-  getMaxScoreForTest,
-} from "./helpers/test-helpers";
+} from "./test-helpers";
 import { TestResult } from "./types";
-import { prependOnceListener } from "process";
 
 type Input = {
   testResults: {

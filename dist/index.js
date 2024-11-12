@@ -32034,7 +32034,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getTableTotals = getTableTotals;
 exports.AggregateResults = AggregateResults;
 const cli_table3_1 = __importDefault(__nccwpck_require__(1668));
-const test_helpers_1 = __nccwpck_require__(5920);
+const test_helpers_1 = __nccwpck_require__(7470);
 function round(number, precision) {
     return Math.round(number * 10 * precision) / (10 * precision);
 }
@@ -32101,7 +32101,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ConsoleResults = void 0;
 const colors_1 = __nccwpck_require__(4838);
 const aggregate_results_1 = __nccwpck_require__(6576);
-const { getTestScore, getMaxScoreForTest } = __nccwpck_require__(5920);
+const { getTestScore, getMaxScoreForTest } = __nccwpck_require__(103);
 const ConsoleResults = function ConsoleResults(runnerResults) {
     try {
         let grandTotalPassedTests = 0;
@@ -32160,43 +32160,6 @@ const ConsoleResults = function ConsoleResults(runnerResults) {
     }
 };
 exports.ConsoleResults = ConsoleResults;
-
-
-/***/ }),
-
-/***/ 5920:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getTestWeight = exports.getTestScore = exports.totalPercentageReducer = exports.getTotalMaxScore = exports.getMaxScoreForTest = void 0;
-const getMaxScoreForTest = (runnerResult) => runnerResult.max_score || 0;
-exports.getMaxScoreForTest = getMaxScoreForTest;
-const getTotalMaxScore = (runnerResults) => {
-    return runnerResults.testResults.reduce((acc, { results }) => acc + results.max_score, 0);
-};
-exports.getTotalMaxScore = getTotalMaxScore;
-const totalPercentageReducer = (acc, { score, weight, maxScore, }) => {
-    return acc + ((score || 0) / (maxScore || 1)) * weight;
-};
-exports.totalPercentageReducer = totalPercentageReducer;
-const getTestScore = (runnerResult, pointsPerTest) => {
-    const { tests } = runnerResult;
-    const score = runnerResult.tests.reduce((acc, { status }) => {
-        return status === "pass" ? acc + 1 : acc;
-    }, 0);
-    return (score / tests.length) * pointsPerTest;
-};
-exports.getTestScore = getTestScore;
-const getTestWeight = (maxScore, allMaxScores) => {
-    if (maxScore === 0) {
-        return (0).toFixed(1);
-    }
-    const weight = allMaxScores !== 0 ? (maxScore / allMaxScores) * 100 : 0;
-    return Math.round(weight).toFixed(2);
-};
-exports.getTestWeight = getTestWeight;
 
 
 /***/ }),
@@ -32400,6 +32363,51 @@ const NotifyClassroom = function NotifyClassroom(runnerResults) {
     });
 };
 exports.NotifyClassroom = NotifyClassroom;
+
+
+/***/ }),
+
+/***/ 7470:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getTestWeight = exports.getTestScore = exports.totalPercentageReducer = exports.getTotalMaxScore = exports.getMaxScoreForTest = void 0;
+const getMaxScoreForTest = (runnerResult) => runnerResult.max_score || 0;
+exports.getMaxScoreForTest = getMaxScoreForTest;
+const getTotalMaxScore = (runnerResults) => {
+    return runnerResults.testResults.reduce((acc, { results }) => acc + results.max_score, 0);
+};
+exports.getTotalMaxScore = getTotalMaxScore;
+const totalPercentageReducer = (acc, { score, weight, maxScore, }) => {
+    return acc + ((score || 0) / (maxScore || 1)) * weight;
+};
+exports.totalPercentageReducer = totalPercentageReducer;
+const getTestScore = (runnerResult, pointsPerTest) => {
+    const { tests } = runnerResult;
+    const score = runnerResult.tests.reduce((acc, { status }) => {
+        return status === "pass" ? acc + 1 : acc;
+    }, 0);
+    return (score / tests.length) * pointsPerTest;
+};
+exports.getTestScore = getTestScore;
+const getTestWeight = (maxScore, allMaxScores) => {
+    if (maxScore === 0) {
+        return (0).toFixed(1);
+    }
+    const weight = allMaxScores !== 0 ? (maxScore / allMaxScores) * 100 : 0;
+    return Math.round(weight).toFixed(2);
+};
+exports.getTestWeight = getTestWeight;
+
+
+/***/ }),
+
+/***/ 103:
+/***/ ((module) => {
+
+module.exports = eval("require")("./helpers/test-helpers");
 
 
 /***/ }),
