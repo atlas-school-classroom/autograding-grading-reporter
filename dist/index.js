@@ -29907,110 +29907,157 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 2701:
-/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+/***/ 3300:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
+"use strict";
 
-const core = __nccwpck_require__(4708);
-const github = __nccwpck_require__(3802);
-
-exports.NotifyClassroom = async function NotifyClassroom(runnerResults) {
-    // combine max score and total score from each {runner, results} pair
-    // if max_score is greater than 0 run the rest of this code
-    const { passPoints, maxPoints } = runnerResults.testResults.reduce(
-        (acc, { results }) => {
-            if (results.status === "pass")
-                acc.passPoints += runnerResults.pointsPerTest;
-
-            return acc;
-        },
-        { passPoints: 0, maxPoints: runnerResults.totalPoints }
-    );
-
-    // Our action will need to API access the repository so we require a token
-    // This will need to be set in the calling workflow, otherwise we'll exit
-    const token = process.env.GITHUB_TOKEN || core.getInput("token");
-    if (!token || token === "") {
-        console.log("No Token")
-        return;
-    }
-    // Create the octokit client
-    const octokit = github.getOctokit(token);
-    if (!octokit) {
-        console.log("No Token")
-        return;
-    }
-
-    // The environment contains a variable for current repository. The repository
-    // will be formatted as a name with owner (`nwo`); e.g., jeffrafter/example
-    // We'll split this into two separate variables for later use
-    const nwo = process.env.GITHUB_REPOSITORY || "/";
-    const [owner, repo] = nwo.split("/");
-    if (!owner) {
-        console.log("No Owner")
-        return;
-    }
-    if (!repo) {
-        console.log("No repo")
-        return;
-    }
-
-    // We need the workflow run id
-    const runId = parseInt(process.env.GITHUB_RUN_ID || "");
-    if (Number.isNaN(runId)) return;
-
-    // Fetch the workflow run
-    const workflowRunResponse = await octokit.rest.actions.getWorkflowRun({
-        owner,
-        repo,
-        run_id: runId,
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const core_1 = __importDefault(__nccwpck_require__(4708));
+const notify_classroom_1 = __nccwpck_require__(2689);
+function getTestResults() {
+    const runnerResults = Object.keys(process.env)
+        .filter((key) => key.startsWith("ATLAS_TEST"))
+        .map((key) => {
+        const encodedResults = process.env[key];
+        const json = Buffer.from(encodedResults, "base64").toString("utf-8");
+        return { key, results: JSON.parse(json) };
     });
+    return runnerResults;
+}
+function getTotalPoints() {
+    var _a;
+    return Number((_a = process.env["ATLAS_TOTAL_POINTS"]) !== null && _a !== void 0 ? _a : 100);
+}
+try {
+    const testResults = getTestResults();
+    const numberOfTests = testResults.length;
+    const totalPoints = getTotalPoints();
+    const pointsPerTest = totalPoints / numberOfTests;
+    const results = { testResults, numberOfTests, totalPoints, pointsPerTest };
+    (0, notify_classroom_1.NotifyClassroom)(results);
+}
+catch (error) {
+    //@ts-ignore
+    core_1.default.setFailed(error.message);
+}
 
-    // Find the check suite run
-    const checkSuiteUrl = workflowRunResponse.data.check_suite_url;
-    const checkSuiteId = parseInt(checkSuiteUrl.match(/[0-9]+$/)[0], 10);
 
-    const checkRunsResponse = await octokit.rest.checks.listForSuite({
-        owner,
-        repo,
-        check_name: "run-autograding-tests",
-        check_suite_id: checkSuiteId,
-    });
+/***/ }),
 
-    // Filter to find the check run named "Autograding Tests" for the specific workflow run ID
-    const checkRun = checkRunsResponse.data.total_count === 1 && checkRunsResponse.data.check_runs[0];
+/***/ 2689:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
-    if (!checkRun) {
-        console.log("No Check Run")
-        return;
-    }
+"use strict";
 
-    // Update the checkrun, we'll assign the title, summary and text even though we expect
-    // the title and summary to be overwritten by GitHub Actions (they are required in this call)
-    // We'll also store the total in an annotation to future-proof
-    const text = `Points ${Math.round(passPoints)}/${maxPoints}`;
-    await octokit.rest.checks.update({
-        owner,
-        repo,
-        check_run_id: checkRun.id,
-        output: {
-            title: "Autograding",
-            summary: text,
-            text: JSON.stringify({ totalPoints: passPoints, maxPoints }),
-            annotations: [
-                {
-                    // Using the `.github` path is what GitHub Actions does
-                    path: ".github",
-                    start_line: 1,
-                    end_line: 1,
-                    annotation_level: "notice",
-                    message: text,
-                    title: "Autograding complete",
-                },
-            ],
-        },
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.NotifyClassroom = void 0;
+const core_1 = __importDefault(__nccwpck_require__(4708));
+const github_1 = __importDefault(__nccwpck_require__(3802));
+const NotifyClassroom = function NotifyClassroom(runnerResults) {
+    return __awaiter(this, void 0, void 0, function* () {
+        // combine max score and total score from each {runner, results} pair
+        // if max_score is greater than 0 run the rest of this code
+        const { passPoints, maxPoints } = runnerResults.testResults.reduce((acc, { results }) => {
+            if (results.status === "pass")
+                acc.passPoints += runnerResults.pointsPerTest;
+            return acc;
+        }, { passPoints: 0, maxPoints: runnerResults.totalPoints });
+        // Our action will need to API access the repository so we require a token
+        // This will need to be set in the calling workflow, otherwise we'll exit
+        const token = process.env.GITHUB_TOKEN || core_1.default.getInput("token");
+        if (!token || token === "") {
+            console.log("No Token");
+            return;
+        }
+        // Create the octokit client
+        const octokit = github_1.default.getOctokit(token);
+        if (!octokit) {
+            console.log("No Token");
+            return;
+        }
+        // The environment contains a variable for current repository. The repository
+        // will be formatted as a name with owner (`nwo`); e.g., jeffrafter/example
+        // We'll split this into two separate variables for later use
+        const nwo = process.env.GITHUB_REPOSITORY || "/";
+        const [owner, repo] = nwo.split("/");
+        if (!owner) {
+            console.log("No Owner");
+            return;
+        }
+        if (!repo) {
+            console.log("No repo");
+            return;
+        }
+        // We need the workflow run id
+        const runId = parseInt(process.env.GITHUB_RUN_ID || "");
+        if (Number.isNaN(runId))
+            return;
+        // Fetch the workflow run
+        const workflowRunResponse = yield octokit.rest.actions.getWorkflowRun({
+            owner,
+            repo,
+            run_id: runId,
+        });
+        // Find the check suite run
+        const checkSuiteUrl = workflowRunResponse.data.check_suite_url; //@ts-ignore
+        const checkSuiteId = parseInt(checkSuiteUrl.match(/[0-9]+$/)[0], 10);
+        const checkRunsResponse = yield octokit.rest.checks.listForSuite({
+            owner,
+            repo,
+            check_name: "run-autograding-tests",
+            check_suite_id: checkSuiteId,
+        });
+        // Filter to find the check run named "Autograding Tests" for the specific workflow run ID
+        const checkRun = checkRunsResponse.data.total_count === 1 &&
+            checkRunsResponse.data.check_runs[0];
+        if (!checkRun) {
+            console.log("No Check Run");
+            return;
+        }
+        // Update the checkrun, we'll assign the title, summary and text even though we expect
+        // the title and summary to be overwritten by GitHub Actions (they are required in this call)
+        // We'll also store the total in an annotation to future-proof
+        const text = `Points ${Math.floor(passPoints)}/${maxPoints}`;
+        yield octokit.rest.checks.update({
+            owner,
+            repo,
+            check_run_id: checkRun.id,
+            output: {
+                title: "Autograding",
+                summary: text,
+                text: JSON.stringify({ totalPoints: Math.floor(passPoints), maxPoints }),
+                annotations: [
+                    {
+                        // Using the `.github` path is what GitHub Actions does
+                        path: ".github",
+                        start_line: 1,
+                        end_line: 1,
+                        annotation_level: "notice",
+                        message: text,
+                        title: "Autograding complete",
+                    },
+                ],
+            },
+        });
+    });
+};
+exports.NotifyClassroom = NotifyClassroom;
 
 
 /***/ }),
@@ -31918,37 +31965,12 @@ module.exports = parseParams
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-const core = __nccwpck_require__(4708);
-const github = __nccwpck_require__(3802);
-const { NotifyClassroom } = __nccwpck_require__(2701);
-
-function getTestResults() {
-    const runnerResults = Object.keys(process.env)
-        .filter(key => key.startsWith("ATLAS_TEST"))
-        .map((key) => {
-            const encodedResults = process.env[key];
-            const json = Buffer.from(encodedResults, "base64").toString("utf-8");
-            return { key, results: JSON.parse(json) };
-        });
-    return runnerResults;
-}
-
-function getTotalPoints() {
-    return Number(process.env["ATLAS_TOTAL_POINTS"] ?? 100);
-}
-
-
-try {
-    const testResults = getTestResults();
-    const numberOfTests = testResults.length;
-    const totalPoints = getTotalPoints();
-    const pointsPerTest = totalPoints / numberOfTests
-    const results = { testResults, numberOfTests, totalPoints, pointsPerTest }
-    NotifyClassroom(results);
-} catch (error) {
-    core.setFailed(error.message);
-}
-module.exports = __webpack_exports__;
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __nccwpck_require__(3300);
+/******/ 	module.exports = __webpack_exports__;
+/******/ 	
 /******/ })()
 ;
