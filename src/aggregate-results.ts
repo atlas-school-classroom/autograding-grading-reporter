@@ -2,7 +2,7 @@ import Table from "cli-table3";
 import {
   getTestScore,
 } from "./test-helpers";
-import { TestResult } from "./types";
+import { TestResult } from "./types";1
 
 type Input = {
   testResults: {
@@ -14,8 +14,9 @@ type Input = {
   pointsPerTest: number;
 };
 
-function round(number: number, precision: number){
-  return Math.round(number * 10 * precision) / (10 * precision)
+function round(number: number, precision: number) {
+  const multiplier = 10 * precision;
+  return Math.round(number * multiplier) /multiplier
 }
 
 export function getTableTotals(

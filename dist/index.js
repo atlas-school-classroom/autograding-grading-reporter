@@ -32035,8 +32035,10 @@ exports.getTableTotals = getTableTotals;
 exports.AggregateResults = AggregateResults;
 const cli_table3_1 = __importDefault(__nccwpck_require__(1668));
 const test_helpers_1 = __nccwpck_require__(7470);
+1;
 function round(number, precision) {
-    return Math.round(number * 10 * precision) / (10 * precision);
+    const multiplier = 10 * precision;
+    return Math.round(number * multiplier) / multiplier;
 }
 function getTableTotals(runnerResults, pushToTable) {
     return runnerResults.testResults.map(({ key, results }) => {
