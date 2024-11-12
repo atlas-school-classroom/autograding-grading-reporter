@@ -82,7 +82,7 @@ exports.NotifyClassroom = async function NotifyClassroom(runnerResults) {
         output: {
             title: "Autograding",
             summary: text,
-            text: JSON.stringify({ passPoints, maxPoints }),
+            text: JSON.stringify({ totalPoints: passPoints, maxPoints }),
             annotations: [
                 {
                     // Using the `.github` path is what GitHub Actions does
@@ -103,7 +103,7 @@ exports.NotifyClassroom = async function NotifyClassroom(runnerResults) {
         output: {
             title: "Autograding",
             summary: text,
-            text: JSON.stringify({ passPoints, maxPoints }),
+            text: JSON.stringify({ totalPoints: passPoints, maxPoints }),
             annotations: [
                 {
                     // Using the `.github` path is what GitHub Actions does
