@@ -1,4 +1,4 @@
-import core from "@actions/core";
+import * as core from "@actions/core";
 import { NotifyClassroom } from "./notify-classroom";
 import { TestResult } from "./types";
 import { ConsoleResults } from "./console-results";

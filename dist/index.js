@@ -32205,11 +32205,31 @@ exports.getTestWeight = getTestWeight;
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core_1 = __importDefault(__nccwpck_require__(4708));
+const core = __importStar(__nccwpck_require__(4708));
 const notify_classroom_1 = __nccwpck_require__(2689);
 const console_results_1 = __nccwpck_require__(7842);
 function getTestResults() {
@@ -32235,15 +32255,15 @@ try {
     (0, console_results_1.ConsoleResults)(results);
     (0, notify_classroom_1.NotifyClassroom)(results);
     if (results.testResults.some((r) => r.results.status === "fail")) {
-        core_1.default.setFailed("Some tests failed.");
+        core.setFailed("Some tests failed.");
     }
     else if (results.testResults.some((r) => r.results.status === "error")) {
-        core_1.default.setFailed("Some tests errored.");
+        core.setFailed("Some tests errored.");
     }
 }
 catch (error) {
     //@ts-ignore
-    core_1.default.setFailed(error.message);
+    core.setFailed(error.message);
 }
 
 
