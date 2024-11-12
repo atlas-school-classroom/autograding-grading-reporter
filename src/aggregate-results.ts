@@ -15,7 +15,7 @@ type Input = {
 };
 
 function round(number: number, precision: number) {
-  const multiplier = 10 * precision;
+  const multiplier = Math.pow(10,precision);
   return Math.round(number * multiplier) /multiplier
 }
 
