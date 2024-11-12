@@ -10,7 +10,6 @@ permissions:
 jobs:
   run-autograding-tests:
     runs-on: ubuntu-latest
-    name: Test Reporter Output
     steps:
       - name: "Test Case: Test One"
         id: test-one
