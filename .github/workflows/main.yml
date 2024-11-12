@@ -1,0 +1,22 @@
+on: [push]
+
+jobs:
+  test_job:
+    runs-on: ubuntu-latest
+    name: Test Reporter Output
+    steps:
+      - name: "Test Case: Test One"
+        id: test-one
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: test-one
+          command: "echo \"Hello World\""
+      # To use this repository's private action,
+      # you must check out the repository
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Hello world action step
+        uses: ./ # Uses an action in the root directory
+        id: hello
+        env:
+          ATLAS_TEST_TEST-ONE: "${{steps.test-one.outputs.result}}"
