@@ -15,19 +15,16 @@ jobs:
         id: test-one
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: test-one
           command: 'echo "Hello World"'
       - name: "Test Case: Test Two"
         id: test-two
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: test-one
           command: diff "lsdfkjsf" "sljdhfksjdf"
       - name: "Test Case: Test Three"
         id: test-three
         uses: classroom-resources/autograding-command-grader@v1
         with:
-          test-name: test-three
           command: diff "lsdfkjsf" "sljdhfksjdf"
       # To use this repository's private action,
       # you must check out the repository
