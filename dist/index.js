@@ -29968,6 +29968,7 @@ exports.NotifyClassroom = async function NotifyClassroom(runnerResults) {
 
     // Find the check suite run
     console.log(`Workflow Run Response: ${JSON.stringify(workflowRunResponse.data)}`);
+    console.log(`Check Name: ${JSON.stringify(workflowRunResponse.data.check_name)}`);
     const checkSuiteUrl = workflowRunResponse.data.check_suite_url;
     const checkSuiteId = parseInt(checkSuiteUrl.match(/[0-9]+$/)[0], 10);
 
