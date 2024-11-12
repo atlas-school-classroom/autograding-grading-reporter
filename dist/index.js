@@ -29985,13 +29985,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.NotifyClassroom = void 0;
 const core = __importStar(__nccwpck_require__(4708));
-const github_1 = __importDefault(__nccwpck_require__(3802));
+const github = __importStar(__nccwpck_require__(3802));
 const NotifyClassroom = function NotifyClassroom(runnerResults) {
     return __awaiter(this, void 0, void 0, function* () {
         // combine max score and total score from each {runner, results} pair
@@ -30009,7 +30006,7 @@ const NotifyClassroom = function NotifyClassroom(runnerResults) {
             return;
         }
         // Create the octokit client
-        const octokit = github_1.default.getOctokit(token);
+        const octokit = github.getOctokit(token);
         if (!octokit) {
             console.log("No Token");
             return;
