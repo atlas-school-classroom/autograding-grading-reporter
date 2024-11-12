@@ -1,6 +1,7 @@
 import core from "@actions/core";
 import { NotifyClassroom } from "./notify-classroom";
 import { TestResult } from "./types";
+import { ConsoleResults } from "./console-results";
 
 function getTestResults(): {
   key: string;
@@ -26,6 +27,8 @@ try {
   const maxPoints = getTotalPoints();
   const pointsPerTest = maxPoints / numberOfTests;
   const results = { testResults, numberOfTests, maxPoints, pointsPerTest };
+
+  ConsoleResults(results);
   NotifyClassroom(results);
 } catch (error) {
   //@ts-ignore

@@ -1,13 +1,25 @@
-const { COLORS } = require("./colors");
-const { AggregateResults } = require("./aggregate-results");
+import { TestResult } from "./types";
+
+import { COLORS } from "./colors";
+import { AggregateResults } from "./aggregate-results";
 const { getTestScore, getMaxScoreForTest } = require("./helpers/test-helpers");
 
-exports.ConsoleResults = function ConsoleResults(runnerResults) {
+type Input = {
+  testResults: {
+    key: string;
+    results: TestResult;
+  }[];
+  numberOfTests: number;
+  maxPoints: number;
+  pointsPerTest: number;
+};
+
+export const ConsoleResults = function ConsoleResults(runnerResults: Input) {
   try {
     let grandTotalPassedTests = 0;
     let grandTotalTests = 0;
 
-    runnerResults.forEach(({ runner, results }, index) => {
+    runnerResults.testResults.forEach(({ key, results }, index) => {
       // Fun transition to new runner
       const maxScore = getMaxScoreForTest(results);
       // const weight = getTestWeight(maxScore, totalMaxScore);
@@ -18,7 +30,6 @@ exports.ConsoleResults = function ConsoleResults(runnerResults) {
         );
       }
 
-      console.log(`🔄 Processing: ${runner}`);
       let passedTests = 0;
       const totalTests = results.tests.length;
 
@@ -57,7 +68,7 @@ exports.ConsoleResults = function ConsoleResults(runnerResults) {
       // Calculate and display points for the current runner
       if (maxScore !== 0) {
         console.log(
-          `Total points for ${runner}: ${score.toFixed(2)}/${maxScore}\n`
+          `Total points for ${key}: ${score.toFixed(2)}/${maxScore}\n`
         );
       }
     });
@@ -69,7 +80,7 @@ exports.ConsoleResults = function ConsoleResults(runnerResults) {
     console.log(
       `${COLORS.cyan}🏆 Grand total tests passed: ${grandTotalPassedTests}/${grandTotalTests}${COLORS.reset}\n`
     );
-  } catch (error) {
+  } catch (error: any) {
     throw new Error(error.message);
   }
 };
