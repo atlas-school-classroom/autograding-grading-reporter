@@ -69,7 +69,10 @@ exports.NotifyClassroom = async function NotifyClassroom(runnerResults) {
     // Filter to find the check run named "Autograding Tests" for the specific workflow run ID
     const checkRun = checkRunsResponse.data.total_count === 1 && checkRunsResponse.data.check_runs[0];
 
-    if (!checkRun) return;
+    if (!checkRun) {
+        console.log("No Check Run")
+        return;
+    }
 
     // Update the checkrun, we'll assign the title, summary and text even though we expect
     // the title and summary to be overwritten by GitHub Actions (they are required in this call)
