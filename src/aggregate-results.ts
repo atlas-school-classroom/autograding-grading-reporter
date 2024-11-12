@@ -21,7 +21,7 @@ type Input = {
 };
 
 function round(number: number, precision: number){
-  return Math.floor(number * 10 * precision) / (10 * precision)
+  return Math.round(number * 10 * precision) / (10 * precision)
 }
 
 export function getTableTotals(
