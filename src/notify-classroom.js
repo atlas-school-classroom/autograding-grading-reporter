@@ -18,11 +18,16 @@ exports.NotifyClassroom = async function NotifyClassroom(runnerResults) {
     // Our action will need to API access the repository so we require a token
     // This will need to be set in the calling workflow, otherwise we'll exit
     const token = process.env.GITHUB_TOKEN || core.getInput("token");
-    if (!token || token === "") return;
-
+    if (!token || token === "") {
+        console.log("No Token")
+        return;
+    }
     // Create the octokit client
     const octokit = github.getOctokit(token);
-    if (!octokit) return;
+    if (!octokit) {
+        console.log("No Token")
+        return;
+    }
 
     // The environment contains a variable for current repository. The repository
     // will be formatted as a name with owner (`nwo`); e.g., jeffrafter/example
