@@ -29930,7 +29930,7 @@ function getTestResults() {
 }
 function getTotalPoints() {
     var _a;
-    return Number((_a = process.env["ATLAS_TOTAL_POINTS"]) !== null && _a !== void 0 ? _a : 100);
+    return Number((_a = process.env["ATLAS_MAX_POINTS"]) !== null && _a !== void 0 ? _a : 100);
 }
 try {
     const testResults = getTestResults();

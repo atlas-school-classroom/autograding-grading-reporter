@@ -17,7 +17,7 @@ function getTestResults(): {
 }
 
 function getTotalPoints(): number {
-  return Number(process.env["ATLAS_TOTAL_POINTS"] ?? 100);
+  return Number(process.env["ATLAS_MAX_POINTS"] ?? 100);
 }
 
 try {

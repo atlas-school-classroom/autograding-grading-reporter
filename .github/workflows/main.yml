@@ -16,7 +16,7 @@ jobs:
         uses: classroom-resources/autograding-command-grader@v1
         with:
           test-name: test-one
-          command: "echo \"Hello World\""
+          command: 'echo "Hello World"'
       - name: "Test Case: Test Two"
         id: test-two
         uses: classroom-resources/autograding-command-grader@v1
@@ -30,6 +30,6 @@ jobs:
       - name: Grade Report
         uses: ./ # Uses an action in the root directory
         env:
-          ATLAS_TOTAL_POINTS: 50
+          ATLAS_MAX_POINTS: 50
           ATLAS_TEST_TEST-ONE: "${{steps.test-one.outputs.result}}"
           ATLAS_TEST_TEST-TWO: "${{steps.test-two.outputs.result}}"
