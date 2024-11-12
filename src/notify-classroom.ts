@@ -90,7 +90,7 @@ export const NotifyClassroom = async function NotifyClassroom(
   // Update the checkrun, we'll assign the title, summary and text even though we expect
   // the title and summary to be overwritten by GitHub Actions (they are required in this call)
   // We'll also store the total in an annotation to future-proof
-  const text = `Points ${Math.floor(totalPoints)}/${maxPoints}`;
+  const text = `Points ${Math.min(Math.round(totalPoints), maxPoints)}/${maxPoints}`;
   await octokit.rest.checks.update({
     owner,
     repo,
@@ -98,7 +98,7 @@ export const NotifyClassroom = async function NotifyClassroom(
     output: {
       title: "Autograding",
       summary: text,
-      text: JSON.stringify({ totalPoints: Math.floor(totalPoints), maxPoints }),
+      text: JSON.stringify({ totalPoints: Math.min(Math.round(totalPoints), maxPoints), maxPoints }),
       annotations: [
         {
           // Using the `.github` path is what GitHub Actions does
