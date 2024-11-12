@@ -1,13 +1,10 @@
 import core from "@actions/core";
 import { NotifyClassroom } from "./notify-classroom";
+import { TestResult } from "./types";
 
 function getTestResults(): {
   key: string;
-  results: {
-    version: number;
-    status: "pass" | "fail" | "error";
-    tests: { name: string }[];
-  };
+  results: TestResult;
 }[] {
   const runnerResults = Object.keys(process.env)
     .filter((key) => key.startsWith("ATLAS_TEST"))
@@ -19,16 +16,16 @@ function getTestResults(): {
   return runnerResults;
 }
 
-function getTotalPoints() {
+function getTotalPoints(): number {
   return Number(process.env["ATLAS_TOTAL_POINTS"] ?? 100);
 }
 
 try {
   const testResults = getTestResults();
   const numberOfTests = testResults.length;
-  const totalPoints = getTotalPoints();
-  const pointsPerTest = totalPoints / numberOfTests;
-  const results = { testResults, numberOfTests, totalPoints, pointsPerTest };
+  const maxPoints = getTotalPoints();
+  const pointsPerTest = maxPoints / numberOfTests;
+  const results = { testResults, numberOfTests, maxPoints, pointsPerTest };
   NotifyClassroom(results);
 } catch (error) {
   //@ts-ignore

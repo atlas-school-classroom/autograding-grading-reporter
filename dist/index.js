@@ -29935,9 +29935,9 @@ function getTotalPoints() {
 try {
     const testResults = getTestResults();
     const numberOfTests = testResults.length;
-    const totalPoints = getTotalPoints();
-    const pointsPerTest = totalPoints / numberOfTests;
-    const results = { testResults, numberOfTests, totalPoints, pointsPerTest };
+    const maxPoints = getTotalPoints();
+    const pointsPerTest = maxPoints / numberOfTests;
+    const results = { testResults, numberOfTests, maxPoints, pointsPerTest };
     (0, notify_classroom_1.NotifyClassroom)(results);
 }
 catch (error) {
@@ -29993,11 +29993,11 @@ const NotifyClassroom = function NotifyClassroom(runnerResults) {
     return __awaiter(this, void 0, void 0, function* () {
         // combine max score and total score from each {runner, results} pair
         // if max_score is greater than 0 run the rest of this code
-        const { passPoints, maxPoints } = runnerResults.testResults.reduce((acc, { results }) => {
+        const { totalPoints, maxPoints } = runnerResults.testResults.reduce((acc, { results }) => {
             if (results.status === "pass")
-                acc.passPoints += runnerResults.pointsPerTest;
+                acc.totalPoints += runnerResults.pointsPerTest;
             return acc;
-        }, { passPoints: 0, maxPoints: runnerResults.totalPoints });
+        }, { totalPoints: 0, maxPoints: runnerResults.maxPoints });
         // Our action will need to API access the repository so we require a token
         // This will need to be set in the calling workflow, otherwise we'll exit
         const token = process.env.GITHUB_TOKEN || core.getInput("token");
@@ -30053,7 +30053,7 @@ const NotifyClassroom = function NotifyClassroom(runnerResults) {
         // Update the checkrun, we'll assign the title, summary and text even though we expect
         // the title and summary to be overwritten by GitHub Actions (they are required in this call)
         // We'll also store the total in an annotation to future-proof
-        const text = `Points ${Math.floor(passPoints)}/${maxPoints}`;
+        const text = `Points ${Math.floor(totalPoints)}/${maxPoints}`;
         yield octokit.rest.checks.update({
             owner,
             repo,
@@ -30061,7 +30061,7 @@ const NotifyClassroom = function NotifyClassroom(runnerResults) {
             output: {
                 title: "Autograding",
                 summary: text,
-                text: JSON.stringify({ totalPoints: Math.floor(passPoints), maxPoints }),
+                text: JSON.stringify({ totalPoints: Math.floor(totalPoints), maxPoints }),
                 annotations: [
                     {
                         // Using the `.github` path is what GitHub Actions does

@@ -1,20 +1,14 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
+import { TestResult } from "./types";
 
 type Input = {
   testResults: {
     key: string;
-
-    results: {
-      version: number;
-      status: "pass" | "fail" | "error";
-      tests: {
-        name: string;
-      }[];
-    };
+    results: TestResult;
   }[];
   numberOfTests: number;
-  totalPoints: number;
+  maxPoints: number;
   pointsPerTest: number;
 };
 
@@ -23,14 +17,14 @@ export const NotifyClassroom = async function NotifyClassroom(
 ) {
   // combine max score and total score from each {runner, results} pair
   // if max_score is greater than 0 run the rest of this code
-  const { passPoints, maxPoints } = runnerResults.testResults.reduce(
-    (acc: { passPoints: number; maxPoints: number }, { results }) => {
+  const { totalPoints, maxPoints } = runnerResults.testResults.reduce(
+    (acc: { totalPoints: number; maxPoints: number }, { results }) => {
       if (results.status === "pass")
-        acc.passPoints += runnerResults.pointsPerTest;
+        acc.totalPoints += runnerResults.pointsPerTest;
 
       return acc;
     },
-    { passPoints: 0, maxPoints: runnerResults.totalPoints }
+    { totalPoints: 0, maxPoints: runnerResults.maxPoints }
   );
 
   // Our action will need to API access the repository so we require a token
@@ -96,7 +90,7 @@ export const NotifyClassroom = async function NotifyClassroom(
   // Update the checkrun, we'll assign the title, summary and text even though we expect
   // the title and summary to be overwritten by GitHub Actions (they are required in this call)
   // We'll also store the total in an annotation to future-proof
-  const text = `Points ${Math.floor(passPoints)}/${maxPoints}`;
+  const text = `Points ${Math.floor(totalPoints)}/${maxPoints}`;
   await octokit.rest.checks.update({
     owner,
     repo,
@@ -104,7 +98,7 @@ export const NotifyClassroom = async function NotifyClassroom(
     output: {
       title: "Autograding",
       summary: text,
-      text: JSON.stringify({ totalPoints: Math.floor(passPoints), maxPoints }),
+      text: JSON.stringify({ totalPoints: Math.floor(totalPoints), maxPoints }),
       annotations: [
         {
           // Using the `.github` path is what GitHub Actions does
