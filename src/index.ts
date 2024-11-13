@@ -1,7 +1,7 @@
 import * as core from "@actions/core";
 import { NotifyClassroom } from "./notify-classroom";
 import { TestResult } from "./types";
-import { ConsoleResults } from "./console-results";
+import { ConsoleResults } from "./console-results/console-results";
 
 function getTestResults(): {
   key: string;

@@ -5,4 +5,5 @@ export const COLORS = {
   red: "\x1b[31m",
   yellow: "\x1b[33m",
   magenta: "\x1b[35m",
+  teal: "ESC[38;2;30;210;175m",
 };

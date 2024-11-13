@@ -1,8 +1,7 @@
 import Table from "cli-table3";
-import {
-  getTestScore,
-} from "./test-helpers";
-import { TestResult } from "./types";1
+import { getTestScore } from "./test-helpers";
+import { TestResult } from "../types";
+1;
 
 type Input = {
   testResults: {
@@ -15,8 +14,8 @@ type Input = {
 };
 
 function round(number: number, precision: number) {
-  const multiplier = Math.pow(10,precision);
-  return Math.round(number * multiplier) /multiplier
+  const multiplier = Math.pow(10, precision);
+  return Math.round(number * multiplier) / multiplier;
 }
 
 export function getTableTotals(
@@ -55,7 +54,11 @@ export function AggregateResults(runnerResults: Input) {
     // const totalPercent = totals.reduce(totalPercentageReducer, 0).toFixed(2) + "%";
     const totalTestScores = totals.reduce((acc, curr) => acc + curr.score, 0);
 
-    table.push(["Total: ", `${Math.min(Math.round(totalTestScores), runnerResults.maxPoints)}`, `${runnerResults.maxPoints}`]);
+    table.push([
+      "Total: ",
+      `${Math.min(Math.round(totalTestScores), runnerResults.maxPoints)}`,
+      `${runnerResults.maxPoints}`,
+    ]);
 
     console.log(table.toString());
   } catch (error: any) {
