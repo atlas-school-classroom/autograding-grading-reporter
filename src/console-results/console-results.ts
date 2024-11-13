@@ -29,7 +29,7 @@ export const ConsoleResults = function ConsoleResults(runnerResults: Input) {
       const score = getTestScore(results, runnerResults.pointsPerTest);
       if (index > 0) {
         console.log(
-          `${COLORS.teal}🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀${COLORS.reset}\n`
+          `${COLORS.magenta}🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀${COLORS.reset}\n`
         );
       }
 
@@ -42,10 +42,10 @@ export const ConsoleResults = function ConsoleResults(runnerResults: Input) {
           passedTests += 1;
           if (test.line_no !== 0) {
             console.log(
-              `${COLORS.teal}✅ ${test.name} - line ${test.line_no}${COLORS.reset}`
+              `${COLORS.green}✅ ${test.name} - line ${test.line_no}${COLORS.reset}`
             );
           } else {
-            console.log(`${COLORS.teal}✅ ${test.name}${COLORS.reset}`);
+            console.log(`${COLORS.green}✅ ${test.name}${COLORS.reset}`);
           }
         } else if (test.status === "error") {
           console.log(

@@ -32093,7 +32093,6 @@ exports.COLORS = {
     red: "\x1b[31m",
     yellow: "\x1b[33m",
     magenta: "\x1b[35m",
-    teal: "ESC[38;2;30;210;175m",
 };
 
 
@@ -32121,7 +32120,7 @@ const ConsoleResults = function ConsoleResults(runnerResults) {
             // const weight = getTestWeight(maxScore, totalMaxScore);
             const score = (0, test_helpers_1.getTestScore)(results, runnerResults.pointsPerTest);
             if (index > 0) {
-                console.log(`${colors_1.COLORS.teal}🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀${colors_1.COLORS.reset}\n`);
+                console.log(`${colors_1.COLORS.magenta}🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀${colors_1.COLORS.reset}\n`);
             }
             let passedTests = 0;
             const totalTests = results.tests.length;
@@ -32130,10 +32129,10 @@ const ConsoleResults = function ConsoleResults(runnerResults) {
                 if (test.status === "pass") {
                     passedTests += 1;
                     if (test.line_no !== 0) {
-                        console.log(`${colors_1.COLORS.teal}✅ ${test.name} - line ${test.line_no}${colors_1.COLORS.reset}`);
+                        console.log(`${colors_1.COLORS.green}✅ ${test.name} - line ${test.line_no}${colors_1.COLORS.reset}`);
                     }
                     else {
-                        console.log(`${colors_1.COLORS.teal}✅ ${test.name}${colors_1.COLORS.reset}`);
+                        console.log(`${colors_1.COLORS.green}✅ ${test.name}${colors_1.COLORS.reset}`);
                     }
                 }
                 else if (test.status === "error") {
