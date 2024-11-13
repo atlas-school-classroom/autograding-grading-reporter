@@ -32108,6 +32108,7 @@ const ConsoleResults = function ConsoleResults(runnerResults) {
     try {
         let grandTotalPassedTests = 0;
         let grandTotalTests = 0;
+        printLogo();
         runnerResults.testResults.forEach(({ key, results }, index) => {
             // Fun transition to new runner
             const maxScore = (0, test_helpers_1.getMaxScoreForTest)(results);
