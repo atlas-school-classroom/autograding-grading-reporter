@@ -134,4 +134,4 @@ Once built you can push to gihub to run some sample worflows. There are two work
  * `error.yml:` This contains three test cases where two the them fail.
  * `success.yml:` This contains three test cases where all three pass.
 
-**IMPORTANT:** In order to notimpact students do not push to the main branch for testing. All student assignments run off the main branch. Develop in a feature branch and then only push to main when code has been tested and is ready for student assignments.
+**IMPORTANT:** In order to not impact students do not push to the main branch for testing. All student assignments run off the main branch. Develop in a feature branch and then only push to main when code has been tested and is ready for student assignments.
