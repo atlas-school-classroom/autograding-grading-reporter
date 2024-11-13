@@ -11,6 +11,8 @@ jobs:
   run-autograding-tests:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: "Test Case: Test One"
         id: test-one
         uses: classroom-resources/autograding-command-grader@v1
@@ -29,10 +31,6 @@ jobs:
         with:
           test-name: test-three
           command: 'echo "Hello World 3"'
-      # To use this repository's private action,
-      # you must check out the repository
-      - name: Checkout
-        uses: actions/checkout@v4
       - name: Grade Report
         uses: ./ # Uses an action in the root directory
         env:
