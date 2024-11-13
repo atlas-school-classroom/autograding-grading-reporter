@@ -32022,7 +32022,7 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 6576:
+/***/ 5837:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -32034,7 +32034,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getTableTotals = getTableTotals;
 exports.AggregateResults = AggregateResults;
 const cli_table3_1 = __importDefault(__nccwpck_require__(1668));
-const test_helpers_1 = __nccwpck_require__(7470);
+const test_helpers_1 = __nccwpck_require__(9529);
 1;
 function round(number, precision) {
     const multiplier = Math.pow(10, precision);
@@ -32064,7 +32064,11 @@ function AggregateResults(runnerResults) {
         const totals = getTableTotals(runnerResults, (row) => table.push(row));
         // const totalPercent = totals.reduce(totalPercentageReducer, 0).toFixed(2) + "%";
         const totalTestScores = totals.reduce((acc, curr) => acc + curr.score, 0);
-        table.push(["Total: ", `${Math.min(Math.round(totalTestScores), runnerResults.maxPoints)}`, `${runnerResults.maxPoints}`]);
+        table.push([
+            "Total: ",
+            `${Math.min(Math.round(totalTestScores), runnerResults.maxPoints)}`,
+            `${runnerResults.maxPoints}`,
+        ]);
         console.log(table.toString());
     }
     catch (error) {
@@ -32075,7 +32079,7 @@ function AggregateResults(runnerResults) {
 
 /***/ }),
 
-/***/ 4838:
+/***/ 8049:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -32089,21 +32093,22 @@ exports.COLORS = {
     red: "\x1b[31m",
     yellow: "\x1b[33m",
     magenta: "\x1b[35m",
+    teal: "ESC[38;2;30;210;175m",
 };
 
 
 /***/ }),
 
-/***/ 7842:
+/***/ 3919:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.ConsoleResults = void 0;
-const colors_1 = __nccwpck_require__(4838);
-const aggregate_results_1 = __nccwpck_require__(6576);
-const test_helpers_1 = __nccwpck_require__(7470);
+const colors_1 = __nccwpck_require__(8049);
+const aggregate_results_1 = __nccwpck_require__(5837);
+const test_helpers_1 = __nccwpck_require__(9529);
 const print_logo_1 = __nccwpck_require__(8615);
 const ConsoleResults = function ConsoleResults(runnerResults) {
     try {
@@ -32116,7 +32121,7 @@ const ConsoleResults = function ConsoleResults(runnerResults) {
             // const weight = getTestWeight(maxScore, totalMaxScore);
             const score = (0, test_helpers_1.getTestScore)(results, runnerResults.pointsPerTest);
             if (index > 0) {
-                console.log(`${colors_1.COLORS.magenta}🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀${colors_1.COLORS.reset}\n`);
+                console.log(`${colors_1.COLORS.teal}🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀${colors_1.COLORS.reset}\n`);
             }
             let passedTests = 0;
             const totalTests = results.tests.length;
@@ -32125,10 +32130,10 @@ const ConsoleResults = function ConsoleResults(runnerResults) {
                 if (test.status === "pass") {
                     passedTests += 1;
                     if (test.line_no !== 0) {
-                        console.log(`${colors_1.COLORS.green}✅ ${test.name} - line ${test.line_no}${colors_1.COLORS.reset}`);
+                        console.log(`${colors_1.COLORS.teal}✅ ${test.name} - line ${test.line_no}${colors_1.COLORS.reset}`);
                     }
                     else {
-                        console.log(`${colors_1.COLORS.green}✅ ${test.name}${colors_1.COLORS.reset}`);
+                        console.log(`${colors_1.COLORS.teal}✅ ${test.name}${colors_1.COLORS.reset}`);
                     }
                 }
                 else if (test.status === "error") {
@@ -32168,6 +32173,43 @@ exports.ConsoleResults = ConsoleResults;
 
 /***/ }),
 
+/***/ 9529:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getTestWeight = exports.getTestScore = exports.totalPercentageReducer = exports.getTotalMaxScore = exports.getMaxScoreForTest = void 0;
+const getMaxScoreForTest = (runnerResult) => runnerResult.max_score || 0;
+exports.getMaxScoreForTest = getMaxScoreForTest;
+const getTotalMaxScore = (runnerResults) => {
+    return runnerResults.testResults.reduce((acc, { results }) => acc + results.max_score, 0);
+};
+exports.getTotalMaxScore = getTotalMaxScore;
+const totalPercentageReducer = (acc, { score, weight, maxScore, }) => {
+    return acc + ((score || 0) / (maxScore || 1)) * weight;
+};
+exports.totalPercentageReducer = totalPercentageReducer;
+const getTestScore = (runnerResult, pointsPerTest) => {
+    const { tests } = runnerResult;
+    const score = runnerResult.tests.reduce((acc, { status }) => {
+        return status === "pass" ? acc + 1 : acc;
+    }, 0);
+    return (score / tests.length) * pointsPerTest;
+};
+exports.getTestScore = getTestScore;
+const getTestWeight = (maxScore, allMaxScores) => {
+    if (maxScore === 0) {
+        return (0).toFixed(1);
+    }
+    const weight = allMaxScores !== 0 ? (maxScore / allMaxScores) * 100 : 0;
+    return Math.round(weight).toFixed(2);
+};
+exports.getTestWeight = getTestWeight;
+
+
+/***/ }),
+
 /***/ 3300:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -32199,7 +32241,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(4708));
 const notify_classroom_1 = __nccwpck_require__(2689);
-const console_results_1 = __nccwpck_require__(7842);
+const console_results_1 = __nccwpck_require__(3919);
 function getTestResults() {
     const runnerResults = Object.keys(process.env)
         .filter((key) => key.startsWith("ATLAS_TEST"))
@@ -32397,43 +32439,6 @@ function printLogo() {
     console.log("@@@@@@@@@@@@     @@@@@@@@@@@@@    @@@@@@@@@  @@@@@@@@@@@@    @@@@@@@@@ @@@@@@@@@@   @@@@@@@@@@@@@@  ");
     console.log("\n\n");
 }
-
-
-/***/ }),
-
-/***/ 7470:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getTestWeight = exports.getTestScore = exports.totalPercentageReducer = exports.getTotalMaxScore = exports.getMaxScoreForTest = void 0;
-const getMaxScoreForTest = (runnerResult) => runnerResult.max_score || 0;
-exports.getMaxScoreForTest = getMaxScoreForTest;
-const getTotalMaxScore = (runnerResults) => {
-    return runnerResults.testResults.reduce((acc, { results }) => acc + results.max_score, 0);
-};
-exports.getTotalMaxScore = getTotalMaxScore;
-const totalPercentageReducer = (acc, { score, weight, maxScore, }) => {
-    return acc + ((score || 0) / (maxScore || 1)) * weight;
-};
-exports.totalPercentageReducer = totalPercentageReducer;
-const getTestScore = (runnerResult, pointsPerTest) => {
-    const { tests } = runnerResult;
-    const score = runnerResult.tests.reduce((acc, { status }) => {
-        return status === "pass" ? acc + 1 : acc;
-    }, 0);
-    return (score / tests.length) * pointsPerTest;
-};
-exports.getTestScore = getTestScore;
-const getTestWeight = (maxScore, allMaxScores) => {
-    if (maxScore === 0) {
-        return (0).toFixed(1);
-    }
-    const weight = allMaxScores !== 0 ? (maxScore / allMaxScores) * 100 : 0;
-    return Math.round(weight).toFixed(2);
-};
-exports.getTestWeight = getTestWeight;
 
 
 /***/ }),
