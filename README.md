@@ -3,14 +3,15 @@
 This repository is a fork of [https://github.com/classroom-resources/autograding-grading-reporter](https://github.com/classroom-resources/autograding-grading-reporter)
 
 ### Overview
+
 **Atlas School Autograding Reporter** is a plugin for GitHub Classroom's Autograder. Use it to report the results of the test execution to students and GitHub Classroom.
 
 ### Environment Variables
 
-| Env Name | Description | Required | Default |
-|----------|-------------|----------|----------|
-| ATLAS_MAX_POINTS | Total number of points tests are worth | No | | 100 |
-| ATLAS_TEST_[TEST_NAME] | The value is the result output from the runner. | Yes | |  |
+| Env Name               | Description                                     | Required | Default |
+| ---------------------- | ----------------------------------------------- | -------- | ------- |
+| ATLAS_MAX_POINTS       | Total number of points the assignment is worth  | No       | 100     |
+| ATLAS_TEST_[TEST_NAME] | The value is the result output from the runner. | Yes      |         |
 
 ### Usage
 
@@ -30,6 +31,8 @@ jobs:
   run-autograding-tests:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: "Test Case: Test One"
         id: test-one
         uses: classroom-resources/autograding-command-grader@v1
@@ -48,10 +51,6 @@ jobs:
         with:
           test-name: test-three
           command: diff "lsdfkjsf" "sljdhfksjdf"
-      # To use this repository's private action,
-      # you must check out the repository
-      - name: Checkout
-        uses: actions/checkout@v4
       - name: Grade Report
         uses: atlas-school-classroom/autograding-grading-reporter@main
         env:
@@ -62,7 +61,26 @@ jobs:
 ```
 
 ### Example Output
+
 ```
+    @@@@@@@@@@@@@@@            @@@@@@      @@@@@@@@@@@                                             
+    @@@@@@@@@@@@@@@            @@@@@@      @@@@@@@@@@@                                             
+     @@@@@@@@@@@@@@@           @@@@@@          @@@@@@@                                             
+       @@@@@@@@@@@@@       @@@@@@@@@@@@@@@     @@@@@@@       @@@@@@@@@@@@@@         @@@@@@@@@@@@@  
+      @@@@@@@ @@@@@@@      @@@@@@@@@@@@@@@     @@@@@@@     @@@@@@@@@@@@@@@@@      @@@@@@@@@@@@@@@@@
+      @@@@@@   @@@@@@@     @@@@@@@@@@@@@@@     @@@@@@@     @@@@@@@@@@@@@@@@@@    @@@@@@@@@@@@@@@@@@
+     @@@@@@@   @@@@@@@        @@@@@@@          @@@@@@@     @@@@@@     @@@@@@@    @@@@@@@    @@@@@@@
+    @@@@@@@@@@@@@@@@@@@       @@@@@@@          @@@@@@@            @@@@@@@@@@@    @@@@@@@@@@@@      
+    @@@@@@@@@@@@@@@@@@@@      @@@@@@@          @@@@@@@      @@@@@@@@@@@@@@@@@     @@@@@@@@@@@@@@@@ 
+   @@@@@@@@@@@@@@@@@@@@@      @@@@@@@          @@@@@@@     @@@@@@@@@@@@@@@@@@      @@@@@@@@@@@@@@@@
+   @@@@@@@@@@@@@@@@@@@@@@     @@@@@@@          @@@@@@@    @@@@@@@     @@@@@@@              @@@@@@@@
+  @@@@@@@          @@@@@@@    @@@@@@@          @@@@@@@    @@@@@@@   @@@@@@@@@    @@@@@@      @@@@@@
+@@@@@@@@@@@@     @@@@@@@@@@@@@  @@@@@@@@@@@ @@@@@@@@@@@@@  @@@@@@@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@     @@@@@@@@@@@@@  @@@@@@@@@@@ @@@@@@@@@@@@@   @@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@     @@@@@@@@@@@@@    @@@@@@@@@  @@@@@@@@@@@@    @@@@@@@@@ @@@@@@@@@@   @@@@@@@@@@@@@@  
+
+
+
 🔄 Processing: ATLAS_TEST_TEST_ONE
 ✅ test-one
 Test code:
@@ -92,9 +110,28 @@ Test runner summary
 ├────────────────────┼─────────────┼─────────────┤
 │ Test three         │ 0           │ 16.67       │
 ├────────────────────┼─────────────┼─────────────┤
-│ Total:             │ 16.67       │ 50          │
+│ Total:             │ 17          │ 50          │
 └────────────────────┴─────────────┴─────────────┘
 🏆 Grand total tests passed: 1/3
 
 Error: Some tests failed.
 ```
+
+### Development
+
+[pnpm](https://pnpm.io) is used to manage dependencies. To install dependencies run:
+```
+pnpm install
+```
+
+The github action runs the `dist/index.js` file. To run code in a github action you must build the code and then commit the changes to the dist folder. To build the code run:
+
+```
+pnpm build
+```
+
+Once built you can push to gihub to run some sample worflows. There are two workflows for testing the action. When pushing to the repository they will automatically run:
+ * `error.yml:` This contains three test cases where two the them fail.
+ * `success.yml:` This contains three test cases where all three pass.
+
+**IMPORTANT:** In order to notimpact students do not push to the main branch for testing. All student assignments run off the main branch. Develop in a feature branch and then only push to main when code has been tested and is ready for student assignments.
