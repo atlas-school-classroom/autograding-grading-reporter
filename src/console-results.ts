@@ -3,6 +3,7 @@ import { TestResult } from "./types";
 import { COLORS } from "./colors";
 import { AggregateResults } from "./aggregate-results";
 import { getTestScore, getMaxScoreForTest } from "./test-helpers";
+import { printLogo } from "./print-logo";
 
 type Input = {
   testResults: {

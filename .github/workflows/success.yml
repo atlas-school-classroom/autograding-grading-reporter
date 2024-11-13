@@ -1,4 +1,4 @@
-name: Autograding Tests
+name: Autograding Tests - Success
 on:
   - push
   - workflow_dispatch

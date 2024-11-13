@@ -32104,11 +32104,12 @@ exports.ConsoleResults = void 0;
 const colors_1 = __nccwpck_require__(4838);
 const aggregate_results_1 = __nccwpck_require__(6576);
 const test_helpers_1 = __nccwpck_require__(7470);
+const print_logo_1 = __nccwpck_require__(8615);
 const ConsoleResults = function ConsoleResults(runnerResults) {
     try {
         let grandTotalPassedTests = 0;
         let grandTotalTests = 0;
-        printLogo();
+        (0, print_logo_1.printLogo)();
         runnerResults.testResults.forEach(({ key, results }, index) => {
             // Fun transition to new runner
             const maxScore = (0, test_helpers_1.getMaxScoreForTest)(results);
@@ -32366,6 +32367,36 @@ const NotifyClassroom = function NotifyClassroom(runnerResults) {
     });
 };
 exports.NotifyClassroom = NotifyClassroom;
+
+
+/***/ }),
+
+/***/ 8615:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.printLogo = printLogo;
+// prettier-ignore
+function printLogo() {
+    console.log("    @@@@@@@@@@@@@@@            @@@@@@      @@@@@@@@@@@                                             ");
+    console.log("    @@@@@@@@@@@@@@@            @@@@@@      @@@@@@@@@@@                                             ");
+    console.log("     @@@@@@@@@@@@@@@           @@@@@@          @@@@@@@                                             ");
+    console.log("       @@@@@@@@@@@@@       @@@@@@@@@@@@@@@     @@@@@@@       @@@@@@@@@@@@@@         @@@@@@@@@@@@@  ");
+    console.log("      @@@@@@@ @@@@@@@      @@@@@@@@@@@@@@@     @@@@@@@     @@@@@@@@@@@@@@@@@      @@@@@@@@@@@@@@@@@");
+    console.log("      @@@@@@   @@@@@@@     @@@@@@@@@@@@@@@     @@@@@@@     @@@@@@@@@@@@@@@@@@    @@@@@@@@@@@@@@@@@@");
+    console.log("     @@@@@@@   @@@@@@@        @@@@@@@          @@@@@@@     @@@@@@     @@@@@@@    @@@@@@@    @@@@@@@");
+    console.log("    @@@@@@@@@@@@@@@@@@@       @@@@@@@          @@@@@@@            @@@@@@@@@@@    @@@@@@@@@@@@      ");
+    console.log("    @@@@@@@@@@@@@@@@@@@@      @@@@@@@          @@@@@@@      @@@@@@@@@@@@@@@@@     @@@@@@@@@@@@@@@@ ");
+    console.log("   @@@@@@@@@@@@@@@@@@@@@      @@@@@@@          @@@@@@@     @@@@@@@@@@@@@@@@@@      @@@@@@@@@@@@@@@@");
+    console.log("   @@@@@@@@@@@@@@@@@@@@@@     @@@@@@@          @@@@@@@    @@@@@@@     @@@@@@@              @@@@@@@@");
+    console.log("  @@@@@@@          @@@@@@@    @@@@@@@          @@@@@@@    @@@@@@@   @@@@@@@@@    @@@@@@      @@@@@@");
+    console.log("@@@@@@@@@@@@     @@@@@@@@@@@@@  @@@@@@@@@@@ @@@@@@@@@@@@@  @@@@@@@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@");
+    console.log("@@@@@@@@@@@@     @@@@@@@@@@@@@  @@@@@@@@@@@ @@@@@@@@@@@@@   @@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@@@@@");
+    console.log("@@@@@@@@@@@@     @@@@@@@@@@@@@    @@@@@@@@@  @@@@@@@@@@@@    @@@@@@@@@ @@@@@@@@@@   @@@@@@@@@@@@@@  ");
+    console.log("\n\n");
+}
 
 
 /***/ }),

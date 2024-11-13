@@ -1,5 +1,5 @@
 // prettier-ignore
-function printLogo(){
+export function printLogo(){
     console.log("    @@@@@@@@@@@@@@@            @@@@@@      @@@@@@@@@@@                                             ");
     console.log("    @@@@@@@@@@@@@@@            @@@@@@      @@@@@@@@@@@                                             ");
     console.log("     @@@@@@@@@@@@@@@           @@@@@@          @@@@@@@                                             ");
