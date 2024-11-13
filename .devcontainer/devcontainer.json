@@ -6,7 +6,7 @@
   },
   "customizations": {
     "vscode": {
-      "extensions": ["ritwickdey.LiveServer"]
+      "extensions": ["ritwickdey.LiveServer", "esbenp.prettier-vscode"]
     }
   }
 }

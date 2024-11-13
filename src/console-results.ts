@@ -19,6 +19,8 @@ export const ConsoleResults = function ConsoleResults(runnerResults: Input) {
     let grandTotalPassedTests = 0;
     let grandTotalTests = 0;
 
+    printLogo();
+
     runnerResults.testResults.forEach(({ key, results }, index) => {
       // Fun transition to new runner
       const maxScore = getMaxScoreForTest(results);
