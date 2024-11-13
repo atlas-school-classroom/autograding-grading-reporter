@@ -22,13 +22,13 @@ jobs:
         uses: classroom-resources/autograding-command-grader@v1
         with:
           test-name: test-one
-          command: diff "lsdfkjsf" "sljdhfksjdf"
+          command: 'echo "Hello World 2"'
       - name: "Test Case: Test Three"
         id: test-three
         uses: classroom-resources/autograding-command-grader@v1
         with:
           test-name: test-three
-          command: diff "lsdfkjsf" "sljdhfksjdf"
+          command: 'echo "Hello World 3"'
       # To use this repository's private action,
       # you must check out the repository
       - name: Checkout
