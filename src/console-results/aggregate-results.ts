@@ -1,17 +1,6 @@
 import Table from "cli-table3";
 import { getTestScore } from "./test-helpers";
-import { TestResult } from "../types";
-1;
-
-type Input = {
-  testResults: {
-    key: string;
-    results: TestResult;
-  }[];
-  numberOfTests: number;
-  maxPoints: number;
-  pointsPerTest: number;
-};
+import { Input, TestResult } from "../types";
 
 function round(number: number, precision: number) {
   const multiplier = Math.pow(10, precision);

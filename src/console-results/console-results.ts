@@ -1,19 +1,9 @@
-import { TestResult } from "../types";
+import { Input, TestResult } from "../types";
 
 import { COLORS } from "./colors";
 import { AggregateResults } from "./aggregate-results";
 import { getTestScore, getMaxScoreForTest } from "./test-helpers";
-import { printLogo } from "../print-logo";
-
-type Input = {
-  testResults: {
-    key: string;
-    results: TestResult;
-  }[];
-  numberOfTests: number;
-  maxPoints: number;
-  pointsPerTest: number;
-};
+import { printLogo } from "./print-logo";
 
 export const ConsoleResults = function ConsoleResults(runnerResults: Input) {
   try {

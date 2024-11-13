@@ -32035,7 +32035,6 @@ exports.getTableTotals = getTableTotals;
 exports.AggregateResults = AggregateResults;
 const cli_table3_1 = __importDefault(__nccwpck_require__(1668));
 const test_helpers_1 = __nccwpck_require__(9529);
-1;
 function round(number, precision) {
     const multiplier = Math.pow(10, precision);
     return Math.round(number * multiplier) / multiplier;
@@ -32108,7 +32107,7 @@ exports.ConsoleResults = void 0;
 const colors_1 = __nccwpck_require__(8049);
 const aggregate_results_1 = __nccwpck_require__(5837);
 const test_helpers_1 = __nccwpck_require__(9529);
-const print_logo_1 = __nccwpck_require__(8615);
+const print_logo_1 = __nccwpck_require__(4716);
 const ConsoleResults = function ConsoleResults(runnerResults) {
     try {
         let grandTotalPassedTests = 0;
@@ -32168,6 +32167,36 @@ const ConsoleResults = function ConsoleResults(runnerResults) {
     }
 };
 exports.ConsoleResults = ConsoleResults;
+
+
+/***/ }),
+
+/***/ 4716:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.printLogo = printLogo;
+// prettier-ignore
+function printLogo() {
+    console.log("    @@@@@@@@@@@@@@@            @@@@@@      @@@@@@@@@@@                                             ");
+    console.log("    @@@@@@@@@@@@@@@            @@@@@@      @@@@@@@@@@@                                             ");
+    console.log("     @@@@@@@@@@@@@@@           @@@@@@          @@@@@@@                                             ");
+    console.log("       @@@@@@@@@@@@@       @@@@@@@@@@@@@@@     @@@@@@@       @@@@@@@@@@@@@@         @@@@@@@@@@@@@  ");
+    console.log("      @@@@@@@ @@@@@@@      @@@@@@@@@@@@@@@     @@@@@@@     @@@@@@@@@@@@@@@@@      @@@@@@@@@@@@@@@@@");
+    console.log("      @@@@@@   @@@@@@@     @@@@@@@@@@@@@@@     @@@@@@@     @@@@@@@@@@@@@@@@@@    @@@@@@@@@@@@@@@@@@");
+    console.log("     @@@@@@@   @@@@@@@        @@@@@@@          @@@@@@@     @@@@@@     @@@@@@@    @@@@@@@    @@@@@@@");
+    console.log("    @@@@@@@@@@@@@@@@@@@       @@@@@@@          @@@@@@@            @@@@@@@@@@@    @@@@@@@@@@@@      ");
+    console.log("    @@@@@@@@@@@@@@@@@@@@      @@@@@@@          @@@@@@@      @@@@@@@@@@@@@@@@@     @@@@@@@@@@@@@@@@ ");
+    console.log("   @@@@@@@@@@@@@@@@@@@@@      @@@@@@@          @@@@@@@     @@@@@@@@@@@@@@@@@@      @@@@@@@@@@@@@@@@");
+    console.log("   @@@@@@@@@@@@@@@@@@@@@@     @@@@@@@          @@@@@@@    @@@@@@@     @@@@@@@              @@@@@@@@");
+    console.log("  @@@@@@@          @@@@@@@    @@@@@@@          @@@@@@@    @@@@@@@   @@@@@@@@@    @@@@@@      @@@@@@");
+    console.log("@@@@@@@@@@@@     @@@@@@@@@@@@@  @@@@@@@@@@@ @@@@@@@@@@@@@  @@@@@@@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@");
+    console.log("@@@@@@@@@@@@     @@@@@@@@@@@@@  @@@@@@@@@@@ @@@@@@@@@@@@@   @@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@@@@@");
+    console.log("@@@@@@@@@@@@     @@@@@@@@@@@@@    @@@@@@@@@  @@@@@@@@@@@@    @@@@@@@@@ @@@@@@@@@@   @@@@@@@@@@@@@@  ");
+    console.log("\n\n");
+}
 
 
 /***/ }),
@@ -32239,7 +32268,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(4708));
-const notify_classroom_1 = __nccwpck_require__(2689);
+const notify_classroom_1 = __nccwpck_require__(2906);
 const console_results_1 = __nccwpck_require__(3919);
 function getTestResults() {
     const runnerResults = Object.keys(process.env)
@@ -32278,7 +32307,20 @@ catch (error) {
 
 /***/ }),
 
-/***/ 2689:
+/***/ 2906:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.NotifyClassroom = void 0;
+var notify_classroom_1 = __nccwpck_require__(6123);
+Object.defineProperty(exports, "NotifyClassroom", ({ enumerable: true, get: function () { return notify_classroom_1.NotifyClassroom; } }));
+
+
+/***/ }),
+
+/***/ 6123:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 "use strict";
@@ -32391,7 +32433,10 @@ const NotifyClassroom = function NotifyClassroom(runnerResults) {
             output: {
                 title: "Autograding",
                 summary: text,
-                text: JSON.stringify({ totalPoints: Math.min(Math.round(totalPoints), maxPoints), maxPoints }),
+                text: JSON.stringify({
+                    totalPoints: Math.min(Math.round(totalPoints), maxPoints),
+                    maxPoints,
+                }),
                 annotations: [
                     {
                         // Using the `.github` path is what GitHub Actions does
@@ -32408,36 +32453,6 @@ const NotifyClassroom = function NotifyClassroom(runnerResults) {
     });
 };
 exports.NotifyClassroom = NotifyClassroom;
-
-
-/***/ }),
-
-/***/ 8615:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.printLogo = printLogo;
-// prettier-ignore
-function printLogo() {
-    console.log("    @@@@@@@@@@@@@@@            @@@@@@      @@@@@@@@@@@                                             ");
-    console.log("    @@@@@@@@@@@@@@@            @@@@@@      @@@@@@@@@@@                                             ");
-    console.log("     @@@@@@@@@@@@@@@           @@@@@@          @@@@@@@                                             ");
-    console.log("       @@@@@@@@@@@@@       @@@@@@@@@@@@@@@     @@@@@@@       @@@@@@@@@@@@@@         @@@@@@@@@@@@@  ");
-    console.log("      @@@@@@@ @@@@@@@      @@@@@@@@@@@@@@@     @@@@@@@     @@@@@@@@@@@@@@@@@      @@@@@@@@@@@@@@@@@");
-    console.log("      @@@@@@   @@@@@@@     @@@@@@@@@@@@@@@     @@@@@@@     @@@@@@@@@@@@@@@@@@    @@@@@@@@@@@@@@@@@@");
-    console.log("     @@@@@@@   @@@@@@@        @@@@@@@          @@@@@@@     @@@@@@     @@@@@@@    @@@@@@@    @@@@@@@");
-    console.log("    @@@@@@@@@@@@@@@@@@@       @@@@@@@          @@@@@@@            @@@@@@@@@@@    @@@@@@@@@@@@      ");
-    console.log("    @@@@@@@@@@@@@@@@@@@@      @@@@@@@          @@@@@@@      @@@@@@@@@@@@@@@@@     @@@@@@@@@@@@@@@@ ");
-    console.log("   @@@@@@@@@@@@@@@@@@@@@      @@@@@@@          @@@@@@@     @@@@@@@@@@@@@@@@@@      @@@@@@@@@@@@@@@@");
-    console.log("   @@@@@@@@@@@@@@@@@@@@@@     @@@@@@@          @@@@@@@    @@@@@@@     @@@@@@@              @@@@@@@@");
-    console.log("  @@@@@@@          @@@@@@@    @@@@@@@          @@@@@@@    @@@@@@@   @@@@@@@@@    @@@@@@      @@@@@@");
-    console.log("@@@@@@@@@@@@     @@@@@@@@@@@@@  @@@@@@@@@@@ @@@@@@@@@@@@@  @@@@@@@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@@");
-    console.log("@@@@@@@@@@@@     @@@@@@@@@@@@@  @@@@@@@@@@@ @@@@@@@@@@@@@   @@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@@@@@");
-    console.log("@@@@@@@@@@@@     @@@@@@@@@@@@@    @@@@@@@@@  @@@@@@@@@@@@    @@@@@@@@@ @@@@@@@@@@   @@@@@@@@@@@@@@  ");
-    console.log("\n\n");
-}
 
 
 /***/ }),

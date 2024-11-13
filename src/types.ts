@@ -10,3 +10,13 @@ export type TestResult = {
     test_code: string;
   }[];
 };
+
+export type Input = {
+  testResults: {
+    key: string;
+    results: TestResult;
+  }[];
+  numberOfTests: number;
+  maxPoints: number;
+  pointsPerTest: number;
+};

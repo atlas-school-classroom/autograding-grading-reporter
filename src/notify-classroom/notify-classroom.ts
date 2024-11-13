@@ -1,16 +1,6 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
-import { TestResult } from "./types";
-
-type Input = {
-  testResults: {
-    key: string;
-    results: TestResult;
-  }[];
-  numberOfTests: number;
-  maxPoints: number;
-  pointsPerTest: number;
-};
+import { Input, TestResult } from "../types";
 
 export const NotifyClassroom = async function NotifyClassroom(
   runnerResults: Input
@@ -98,7 +88,10 @@ export const NotifyClassroom = async function NotifyClassroom(
     output: {
       title: "Autograding",
       summary: text,
-      text: JSON.stringify({ totalPoints: Math.min(Math.round(totalPoints), maxPoints), maxPoints }),
+      text: JSON.stringify({
+        totalPoints: Math.min(Math.round(totalPoints), maxPoints),
+        maxPoints,
+      }),
       annotations: [
         {
           // Using the `.github` path is what GitHub Actions does
